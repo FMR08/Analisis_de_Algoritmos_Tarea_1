@@ -4,16 +4,11 @@ from matrix import *
 def strassen(A, B):
 
     n = len(A)
-
-    # Caso base
     if n == 1:
         return [[A[0][0] * B[0][0]]]
 
-    # Dividir matrices
     A11, A12, A21, A22 = split_matrix(A)
     B11, B12, B21, B22 = split_matrix(B)
-
-    # Calcular M1 ... M7
     M1 = strassen(
         add_matrix(A11, A22),
         add_matrix(B11, B22)
@@ -48,8 +43,6 @@ def strassen(A, B):
         sub_matrix(A12, A22),
         add_matrix(B21, B22)
     )
-
-    # Construir bloques de C
     C11 = add_matrix(
         sub_matrix(
             add_matrix(M1, M4),
@@ -69,8 +62,6 @@ def strassen(A, B):
         ),
         M6
     )
-
-    # Unir resultado
     return join_matrix(C11, C12, C21, C22)
 
 
@@ -78,19 +69,16 @@ def strassen_hybrid(A, B, n0=64):
 
     n = len(A)
 
-    # Caso híbrido
+    #hibrido
     if n <= n0:
         return classic_multiply(A, B)
 
-    # Caso base absoluto
+    #absoluto
     if n == 1:
         return [[A[0][0] * B[0][0]]]
-
-    # Dividir matrices
     A11, A12, A21, A22 = split_matrix(A)
     B11, B12, B21, B22 = split_matrix(B)
 
-    # Calcular M1 ... M7
     M1 = strassen_hybrid(
         add_matrix(A11, A22),
         add_matrix(B11, B22),
@@ -132,8 +120,6 @@ def strassen_hybrid(A, B, n0=64):
         add_matrix(B21, B22),
         n0
     )
-
-    # Construcción de C
     C11 = add_matrix(
         sub_matrix(
             add_matrix(M1, M4),
@@ -143,7 +129,6 @@ def strassen_hybrid(A, B, n0=64):
     )
 
     C12 = add_matrix(M3, M5)
-
     C21 = add_matrix(M2, M4)
 
     C22 = add_matrix(
@@ -153,23 +138,17 @@ def strassen_hybrid(A, B, n0=64):
         ),
         M6
     )
-
     return join_matrix(C11, C12, C21, C22)
 
 
 def strassen_general(A, B):
-
     original_size = len(A)
 
     if not is_power_of_two(original_size):
-
         new_size = next_power_of_two(original_size)
-
         A = zero_pad_matrix(A, new_size)
         B = zero_pad_matrix(B, new_size)
-
         C = strassen(A, B)
-
         return unpad_matrix(C, original_size)
 
     return strassen(A, B)
