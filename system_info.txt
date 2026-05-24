@@ -1,0 +1,6 @@
+SYSTEM INFORMATION
+========================================
+Operating System: Windows-11-10.0.26200-SP0
+Processor: Intel64 Family 6 Model 151 Stepping 5, GenuineIntel
+RAM: 15.86 GB
+Python Version: 3.12.7
