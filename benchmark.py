@@ -351,7 +351,7 @@ def verify_correctness(n=8):
 
     strassen_result = strassen(A, B)
 
-    hybrid_result = strassen_hybrid(A, B)
+    hybrid_result = strassen_hybrid(A, B, n0=2)
 
     print(
         "Classic vs Strassen:",
