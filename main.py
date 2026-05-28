@@ -63,64 +63,31 @@ def save_system_info():
 
 
 def search_best_n0():
-
     best_n0 = None
     best_average = None
 
-    with open(
-        "resultados_n0.csv",
-        mode="w",
-        newline=""
-    ) as file:
-
+    with open("resultados_n0.csv", mode="w", newline="") as file:
         writer = csv.writer(file)
-
-        writer.writerow([
-            "n0",
-            "n",
-            "average_time",
-            "std_dev"
-        ])
+        writer.writerow(["n0", "n", "average_time", "std_dev"])
 
         for n0 in N0_VALUES:
-
             total_time = 0
-
             for n in N0_SIZES:
-
-
-                A = create_matrix(
-                    n,
-                    randomize=True
-                )
-
-                B = create_matrix(
-                    n,
-                    randomize=True
-                )
+                A = create_matrix(n, randomize=True)
+                B = create_matrix(n, randomize=True)
 
                 result = benchmark(
                     lambda x, y: strassen_hybrid(x, y, n0),
-                    A,
-                    B,
-                    RUNS
+                    A, B, runs=5
                 )
 
-                writer.writerow([
-                    n0,
-                    n,
-                    result["average"],
-                    result["std_dev"]
-                ])
-
+                writer.writerow([n0, n, result["average"], result["std_dev"]])
                 total_time += result["average"]
 
             average_for_n0 = total_time / len(N0_SIZES)
-
             if best_average is None or average_for_n0 < best_average:
                 best_average = average_for_n0
                 best_n0 = n0
-
 
     return best_n0
 

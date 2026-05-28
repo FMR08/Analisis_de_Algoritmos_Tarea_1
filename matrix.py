@@ -87,31 +87,13 @@ def copy_matrix(A):
 
 
 def add_matrix(A, B):
-
     n = len(A)
-
-    C = create_matrix(n)
-
-    for i in range(n):
-        for j in range(n):
-
-            C[i][j] = A[i][j] + B[i][j]
-
-    return C
+    return [[A[i][j] + B[i][j] for j in range(n)] for i in range(n)]
 
 
 def sub_matrix(A, B):
-
     n = len(A)
-
-    C = create_matrix(n)
-
-    for i in range(n):
-        for j in range(n):
-
-            C[i][j] = A[i][j] - B[i][j]
-
-    return C
+    return [[A[i][j] - B[i][j] for j in range(n)] for i in range(n)]
 
 
 def classic_multiply(A, B):
@@ -136,33 +118,16 @@ def classic_multiply(A, B):
 
 
 def split_matrix(A):
-
-    n = len(A)
-
-    mid = n // 2
-
+    mid = len(A) // 2
     A11 = [row[:mid] for row in A[:mid]]
     A12 = [row[mid:] for row in A[:mid]]
-
     A21 = [row[:mid] for row in A[mid:]]
     A22 = [row[mid:] for row in A[mid:]]
-
     return A11, A12, A21, A22
 
 
 def join_matrix(C11, C12, C21, C22):
-
-    n = len(C11)
-
-    matrix = []
-
-    for i in range(n):
-        matrix.append(C11[i] + C12[i])
-
-    for i in range(n):
-        matrix.append(C21[i] + C22[i])
-
-    return matrix
+    return [C11[i] + C12[i] for i in range(len(C11))] + [C21[i] + C22[i] for i in range(len(C21))]
 
 
 def print_matrix(A):
